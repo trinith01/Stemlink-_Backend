@@ -13,12 +13,24 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Use CORS middleware with dynamic origin from .env
-const corsOptions = {
-  origin: process.env.CLIENT_URL || "*", // Allow requests from frontend URL
-  credentials: true, // Allow cookies/auth headers
-};
+const allowedOrigins = [
+  process.env.CLIENT_URL, // Read frontend URL from environment variable
+  "http://localhost:5173", // Local development (Vite default)
+];
 
-app.use(cors(corsOptions));
+// Configure CORS
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow cookies/auth headers
+  })
+);
 app.use(express.json());
 
 // Connect to database
