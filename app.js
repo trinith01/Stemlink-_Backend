@@ -21,16 +21,10 @@ const allowedOrigins = [
 // Configure CORS
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // Allow cookies/auth headers
+    origin: "*", // Allow all origins (not recommended for production)
+    credentials: true,
   })
-);
+)
 app.use(express.json());
 
 // Connect to database
