@@ -12,25 +12,38 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-// Use CORS middleware with dynamic origin from .env
+// Allowed origins (from environment variables and local development)
 const allowedOrigins = [
-  process.env.CLIENT_URL, // Read frontend URL from environment variable
-  "http://localhost:5173", // Local development (Vite default)
+  process.env.CLIENT_URL,  // Your frontend URL from .env
+  "http://localhost:5173"  // Local development (Vite default)
 ];
 
-// Configure CORS
+// CORS Configuration
 app.use(
   cors({
-    origin: "*", // Allow all origins (not recommended for production)
-    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true, // Allow cookies and auth headers
   })
-)
+);
+
+// Handle preflight requests
+app.options("*", cors());
+
+// Middleware
 app.use(express.json());
 
 // Connect to database
 connectDB();
 
-// A basic route
+// Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Hello World' });
 });
@@ -42,5 +55,5 @@ app.use("/categories", categoryRouter);
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server running successfully on port ${PORT}`);
 });
