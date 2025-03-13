@@ -19,21 +19,7 @@ const allowedOrigins = [
 ];
 
 // CORS Configuration
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
-    credentials: true, // Allow cookies and auth headers
-  })
-);
-
+app.use(cors({ origin: "https://fed-storefrontend-frontend-trinith.netlify.app/" }));
 // Handle preflight requests
 app.options("*", cors());
 
