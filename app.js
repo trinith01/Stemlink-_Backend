@@ -20,8 +20,8 @@ const allowedOrigins = [
 
 // CORS Configuration
 app.use(cors({ origin: "https://fed-storefrontend-frontend-trinith.netlify.app/" }));
-// Handle preflight requests
-app.options("*", cors());
+
+
 
 // Middleware
 app.use(express.json());
@@ -35,9 +35,9 @@ app.get('/', (req, res) => {
 });
 
 // API routes
-app.use("/products", productRoutes);
-app.use("/orders", orderRouter);
-app.use("/categories", categoryRouter);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRouter);
+app.use("/api/categories", categoryRouter);
 
 // Start the server
 app.listen(PORT, () => {
