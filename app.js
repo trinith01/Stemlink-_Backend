@@ -12,11 +12,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-// Allowed origins (from environment variables and local development)
-const allowedOrigins = [
-  process.env.CLIENT_URL,  // Your frontend URL from .env
-  "http://localhost:5173"  // Local development (Vite default)
-];
+
+
 
 // CORS Configuration
 app.use(cors({ origin: "https://fed-storefrontend-frontend-trinith.netlify.app/" }));
