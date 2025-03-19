@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8000;
 
 
 // CORS Configuration
-app.use(cors({ origin: "https://fed-storefrontend-frontend-trinith.netlify.app/" }));
+app.use(cors({ origin: "https://fed-storefrontend-frontend-trinith.netlify.app" }));
 
 
 
